@@ -1,13 +1,5 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "name": "keval",
-      "email": "kevalramoliya3703@gmail.com",
-      "password": "2122",
-      "cpassword": "1111"
-    }
-  ],
+  "posts": [],
   "comments": [],
   "profile": {
     "name": "typicode"

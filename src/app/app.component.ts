@@ -30,7 +30,6 @@ export class AppComponent {
     this.userdata.postuserdata(formdata).subscribe((result) => {
       console.log("post result", result);
     })
-    formdata.reset()
   }
 
   removedata(items: any) {

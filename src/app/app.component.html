@@ -6,30 +6,71 @@
     <div class="col-lg-6">
       <form #formdata="ngForm" class="border border-4 p-3 mt-5 ms-5">
 
+        <!-- Name -->
         <div class="form-group mb-3">
           <label>Name:-</label>
           <input type="text" placeholder="Enter your Name" ngModel
-           name="name" class="form-control" value={{selectuser.name}}>
+            #Name="ngModel"
+            name="name" class="form-control" value={{selectuser.name}} required
+            minlength="2">
+
+          <div *ngIf="Name.invalid && Name.touched" class="alert alert-danger">
+            <div *ngIf="Name.errors?.['required']">Name Must required</div>
+            <div *ngIf="Name.errors?.['minlength']">Minimum Name required</div>
+          </div>
         </div>
+
+        <!-- Email -->
+
         <div class="form-group mb-3">
           <label>Email:-</label>
           <input type="email" placeholder="Enter your Email" ngModel
-             name="email" class="form-control" value={{selectuser.email}}>
+            #Email="ngModel"
+            name="email" class="form-control" value={{selectuser.email}}
+            required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+
+          <div class="alert alert-danger" *ngIf="Email.invalid && Email.touched">
+            <div *ngIf="Email.errors?.['required']">Email Must Required</div>
+            <div *ngIf="Email.errors?.['pattern']">Enter Valid Email Address</div>
+          </div>
         </div>
+
+        <!-- Password -->
+
         <div class="form-group mb-3">
           <label>Password:-</label>
           <input type="password" placeholder="Enter your Password" ngModel
-            #Pa name="password" class="form-control" value={{selectuser.password}}>
-        </div>
-        <div class="form-group mb-3">
-          <label>Confrom Password:-</label>
-          <input type="cpassword" placeholder="Enter your Confrom Password" ngModel
-            #Cpa name="cpassword" class="form-control" value={{selectuser.cpassword}}>
+            #Pa="ngModel" name="password" class="form-control"
+            value={{selectuser.password}} required>
+
+          <div class="alert alert-danger" *ngIf="Pa.invalid && Pa.touched">
+            <div *ngIf="Pa.errors?.['required']">Must Required Password</div>
+          </div>
         </div>
 
+        <!-- Conform Password -->
+        <div class="form-group mb-3">
+          <label>Confrom Password:-</label>
+          <input type="cpassword" placeholder="Enter your Confrom Password"
+            ngModel
+            #Cpa="ngModel" name="cpassword" class="form-control"
+            value={{selectuser.cpassword}} required   [ngClass]="{'is-invalid': Pa.value !== Cpa.value}">
+
+            <div class="alert alert-danger" *ngIf="Cpa.invalid && Cpa.touched">
+              <div *ngIf="Cpa.errors?.['required']">Conform Password Required</div>
+              <div *ngIf="Cpa.errors?.['Pa.value !== Cpa.value']">Passwords do not match</div>
+            </div>
+        </div>
+
+        <!-- Button -->
         <div>
-          <button class="btn btn-success" (click)="postdata(formdata.value)" [disabled]="edituser">Post Data</button>
-          <button class="btn btn-secondary mx-2 px-4" [disabled]="!edituser" (click)="savedata(formdata.value)">Save</button>
+
+          <button class="btn btn-success" (click)="postdata(formdata.value)"
+            [disabled]="edituser" [disabled]="formdata.invalid">Post Data</button>
+
+          <button class="btn btn-secondary mx-2 px-4" [disabled]="!edituser"
+            (click)="savedata(formdata.value)">Save</button>
+
         </div>
 
       </form>
@@ -64,7 +105,8 @@
         <button class="btn btn-danger" (click)="removedata(items)">Delete</button>
       </td>
       <td>
-        <button class="btn btn-secondary" [disabled]="edituser" (click)="editdata(items)">Edit</button>
+        <button class="btn btn-secondary" [disabled]="edituser"
+          (click)="editdata(items)">Edit</button>
       </td>
     </tr>
 
